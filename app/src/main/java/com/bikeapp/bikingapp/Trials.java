@@ -1,6 +1,7 @@
 package com.bikeapp.bikingapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -54,7 +55,8 @@ public class Trials extends AppCompatActivity {
                 TextView txtview = (TextView)viewClicked.findViewById(R.id.textviewlocation);
                 String product = txtview.getText().toString();
 
-
+                Intent intent = new Intent(Trials.this, Map_Activity.class);
+                startActivity(intent);
                 //Invalid Map File, User prompt
                 Snackbar snackbar;
                 snackbar = Snackbar.make(viewClicked, "No Map Data: " + product, Snackbar.LENGTH_SHORT);

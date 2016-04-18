@@ -12,9 +12,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,12 @@ public class Trials extends AppCompatActivity {
     String databasestate = "";
     Boolean databaseisconnected = true;
 
+    //Search View
+    SearchView sv;
+    ListView lv;
+    ArrayAdapter<String> adapter;
+
+
     //Conn Strings
     String dbUsername = "user_db_1219284_Diss";
     String dbPassword = "XZ9A7U";
@@ -52,6 +60,11 @@ public class Trials extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        lv = (ListView) findViewById(R.id.lstTrails);
+        sv = (SearchView) findViewById(R.id.searchView2);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
 
         //Run Methods
         onCreate();
@@ -88,9 +101,26 @@ public class Trials extends AppCompatActivity {
     private void populateTitles() {
 
 
-        ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
+        final ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
         ListView list = (ListView) findViewById(R.id.lstTrails);
         list.setAdapter(adapter);
+
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+
+                adapter.getFilter().filter(text);
+
+                return false;
+            }
+        });
+
 
 
 

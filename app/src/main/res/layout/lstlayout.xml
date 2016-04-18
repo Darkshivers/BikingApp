@@ -20,9 +20,8 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:id="@+id/imageView"
-                android:background="@mipmap/ic_launcher"
-                android:paddingTop="25dp"
+                android:id="@+id/imgBikeType"
+                android:paddingTop="15dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -56,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam scelerisque, massa posuere suscipit placerat, velit odio accumsan odio, a varius purus tellus at arcu. Vivamus dolor lectus"
-                    android:id="@+id/textView3"
+                    android:id="@+id/txtDesc"
                     android:textColor="#ffffff"
                     android:layout_below="@+id/textviewlocation"
                     android:layout_alignLeft="@+id/textviewlocation"

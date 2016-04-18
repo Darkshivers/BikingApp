@@ -38,8 +38,6 @@ public class Trials extends AppCompatActivity {
 
     //Search View
     SearchView sv;
-    ListView lv;
-    ArrayAdapter<String> adapter;
 
 
     //Conn Strings
@@ -48,23 +46,22 @@ public class Trials extends AppCompatActivity {
     String connString = "jdbc:jtds:sqlserver://SQL2014.studentwebserver.co.uk";
     Statement stmt;
 
+    //Array List for List adapter
     public ArrayList<RowItems> TrailsName = new ArrayList<RowItems>();
-    public ArrayList<String> Length = new ArrayList<String>();
-
 
     Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trials);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        lv = (ListView) findViewById(R.id.lstTrails);
+        //implement Search View
         sv = (SearchView) findViewById(R.id.searchView2);
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
 
         //Run Methods
         onCreate();
@@ -97,8 +94,7 @@ public class Trials extends AppCompatActivity {
 
     }
 
-
-    private void populateTitles() {
+    private void populateListViewAdapter() {
 
 
         final ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
@@ -106,32 +102,21 @@ public class Trials extends AppCompatActivity {
         list.setAdapter(adapter);
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String text) {
-
                 adapter.getFilter().filter(text);
-
                 return false;
             }
         });
-
-
-
-
     }
 
     private void populateListView() {
 
-
-
-
-
+//Conn Succeeded
 if (databaseisconnected == true) {
 
 
@@ -141,20 +126,42 @@ if (databaseisconnected == true) {
             String sqlTrailsDB;
             sqlTrailsDB = "SELECT * FROM db_1219284_Diss.dbo.Trails";
             String titles = "";
+            String BikeType = "";
+            String biketypestring = "";
             int length = 0;
             String lengthstring = "";
+            String description = "";
             ResultSet rst;
             rst = stmt.executeQuery(sqlTrailsDB);
 
             while(rst.next()) {
 
+                //Trail table calls
                 titles = rst.getString("Trail_Name");
                 length = rst.getInt("Trail_Length");
+                BikeType = rst.getString("Bike_ID");
+                description = rst.getString("Trail_Desc");
+
+                //Convert to support array adapter
                 lengthstring = String.valueOf(length);
+                biketypestring = String.valueOf(BikeType);
+                String result = "";
 
-                TrailsName.add(new RowItems(titles, lengthstring));
 
-                populateTitles();
+                //Select Statement; chooses bike type
+                if (biketypestring == "1") {
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.BMXBike, description ));
+                }
+
+                else if (biketypestring == "2"){
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.RoadBike, description));
+                }
+
+                else if (biketypestring == "3"){
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.MountainBike, description));
+                }
+
+                populateListViewAdapter();
 
             }
 }
@@ -165,7 +172,7 @@ if (databaseisconnected == true) {
             }
 
 }
-
+//Conn Failed
 else if (databaseisconnected == false) {
 
     new AlertDialog.Builder(context)
@@ -187,6 +194,7 @@ else if (databaseisconnected == false) {
         }
     }
 
+    //Add OnClick to individual ListViews
     private void registerClickCallback() {
 
         ListView list = (ListView) findViewById(R.id.lstTrails);
@@ -200,17 +208,20 @@ else if (databaseisconnected == false) {
                 Intent intent = new Intent(Trials.this, Map_Activity.class);
                 startActivity(intent);
                 //Invalid Map File, User prompt
-                Snackbar snackbar;
-                snackbar = Snackbar.make(viewClicked, "No Map Data: " + product, Snackbar.LENGTH_SHORT);
-                View snackBarView = snackbar.getView();
-
-                //Custom Colour properties
-                snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.White));
-                TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setTextColor(ContextCompat.getColor(context, R.color.Black));
-                snackbar.show();
 
 
+                if (product == null) {
+
+                    Snackbar snackbar;
+                    snackbar = Snackbar.make(viewClicked, "No Map Data: " + product, Snackbar.LENGTH_SHORT);
+                    View snackBarView = snackbar.getView();
+
+                    //Custom Colour properties
+                    snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.White));
+                    TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+                    textView.setTextColor(ContextCompat.getColor(context, R.color.Black));
+                    snackbar.show();
+                }
             }
         });
         }

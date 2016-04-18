@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.StrictMode;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +22,10 @@ import com.google.android.gms.gcm.Task;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Trials extends AppCompatActivity {
@@ -36,6 +40,8 @@ public class Trials extends AppCompatActivity {
     String connString = "jdbc:jtds:sqlserver://SQL2014.studentwebserver.co.uk";
     Statement stmt;
 
+    public ArrayList<RowItems> TrailsName = new ArrayList<RowItems>();
+    public ArrayList<String> Length = new ArrayList<String>();
 
 
     Context context = this;
@@ -78,27 +84,57 @@ public class Trials extends AppCompatActivity {
 
     }
 
+
+    private void populateTitles() {
+
+
+        ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
+        ListView list = (ListView) findViewById(R.id.lstTrails);
+        list.setAdapter(adapter);
+
+
+
+    }
+
     private void populateListView() {
 
 
 
-if (databaseisconnected == true)  {
 
 
-
-            //Test Array Of Items
-            String[] Trails = {"Widnes", "Chester", "Parkgate","Sherdley", "Whiston","Test1","Test2","Test3","Test4","Test5","Test6","Test7","Test8","Test9","Test10"};
-
-            //Build Adapter
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.lstlayout, R.id.textviewlocation, Trails);
+if (databaseisconnected == true) {
 
 
-            //Configure the list view
-            ListView list = (ListView) findViewById(R.id.lstTrails);
-            list.setAdapter(adapter);
+        try {
 
-        }
+            //Query DB for Titles
+            String sqlTrailsDB;
+            sqlTrailsDB = "SELECT * FROM db_1219284_Diss.dbo.Trails";
+            String titles = "";
+            int length = 0;
+            String lengthstring = "";
+            ResultSet rst;
+            rst = stmt.executeQuery(sqlTrailsDB);
 
+            while(rst.next()) {
+
+                titles = rst.getString("Trail_Name");
+                length = rst.getInt("Trail_Length");
+                lengthstring = String.valueOf(length);
+
+                TrailsName.add(new RowItems(titles, lengthstring));
+
+                populateTitles();
+
+            }
+}
+
+        catch(Exception e){
+                System.out.println("connection error " + e.getMessage());
+
+            }
+
+}
 
 else if (databaseisconnected == false) {
 
@@ -112,7 +148,6 @@ else if (databaseisconnected == false) {
 
                     Intent intent = new Intent(Trials.this, MainActivity.class);
                     startActivity(intent);
-
                 }
             })
 
@@ -149,4 +184,4 @@ else if (databaseisconnected == false) {
             }
         });
         }
-}
+    }

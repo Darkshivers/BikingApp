@@ -39,7 +39,6 @@ public class Trials extends AppCompatActivity {
     //Search View
     SearchView sv;
 
-
     //Conn Strings
     String dbUsername = "user_db_1219284_Diss";
     String dbPassword = "XZ9A7U";
@@ -48,7 +47,6 @@ public class Trials extends AppCompatActivity {
 
     //Array List for List adapter
     public ArrayList<RowItems> TrailsName = new ArrayList<RowItems>();
-
     Context context = this;
 
     @Override
@@ -65,37 +63,29 @@ public class Trials extends AppCompatActivity {
 
         //Run Methods
         onCreate();
-
     }
 
     public void onCreate(){
 
         try {
-
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
             Connection DbConn = DriverManager.getConnection(connString, dbUsername, dbPassword);
             databasestate = ("Database Open");
             databaseisconnected = true;
             System.out.println(databasestate);
             stmt = DbConn.createStatement();
-
         }
 
         catch (Exception e) {
-
             databasestate = ("Connection error " + e.getMessage());
             System.out.println(databasestate);
             databaseisconnected = false;
-
         }
-
         populateListView();
         registerClickCallback();
-
     }
 
     private void populateListViewAdapter() {
-
 
         final ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
         ListView list = (ListView) findViewById(R.id.lstTrails);
@@ -118,7 +108,6 @@ public class Trials extends AppCompatActivity {
 
 //Conn Succeeded
 if (databaseisconnected == true) {
-
 
         try {
 
@@ -147,16 +136,13 @@ if (databaseisconnected == true) {
                 biketypestring = String.valueOf(BikeType);
                 String result = "";
 
-
                 //Select Statement; chooses bike type
                 if (biketypestring == "1") {
                     TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.BMXBike, description ));
                 }
-
                 else if (biketypestring == "2"){
                     TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.RoadBike, description));
                 }
-
                 else if (biketypestring == "3"){
                     TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.MountainBike, description));
                 }
@@ -172,6 +158,7 @@ if (databaseisconnected == true) {
             }
 
 }
+
 //Conn Failed
 else if (databaseisconnected == false) {
 
@@ -190,7 +177,6 @@ else if (databaseisconnected == false) {
 
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show();
-
         }
     }
 
@@ -207,9 +193,8 @@ else if (databaseisconnected == false) {
 
                 Intent intent = new Intent(Trials.this, Map_Activity.class);
                 startActivity(intent);
+
                 //Invalid Map File, User prompt
-
-
                 if (product == null) {
 
                     Snackbar snackbar;
@@ -221,6 +206,7 @@ else if (databaseisconnected == false) {
                     TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
                     textView.setTextColor(ContextCompat.getColor(context, R.color.Black));
                     snackbar.show();
+
                 }
             }
         });

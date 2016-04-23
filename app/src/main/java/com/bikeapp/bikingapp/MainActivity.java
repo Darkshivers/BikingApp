@@ -14,9 +14,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button Trails;
 
+        Trails = (Button) findViewById(R.id.txtTest);
         SearchView sv = (SearchView) findViewById(R.id.searchView);
-        sv.setOnSearchClickListener(new View.OnClickListener() {
+        Trails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Trials.class);
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Search Pressed");
             }
         });
+
 
 
 

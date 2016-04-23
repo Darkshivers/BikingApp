@@ -3,11 +3,15 @@ package com.bikeapp.bikingapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Map_Activity extends AppCompatActivity {
+public class Tutorial extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_);
+        setContentView(R.layout.activity_tutorial);
+
+
+
+
     }
 }

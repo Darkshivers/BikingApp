@@ -8,9 +8,10 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -19,10 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashScreen">
-            <application
+            <application android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
 
-                android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
-                </application>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,11 +42,14 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Trials" />
-        <activity android:name=".Map_Activity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Tutorial" />
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

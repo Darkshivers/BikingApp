@@ -38,6 +38,7 @@ public class Trials extends AppCompatActivity {
 
     //Search View
     SearchView sv;
+    TextView title;
 
     //Conn Strings
     String dbUsername = "user_db_1219284_Diss";
@@ -60,6 +61,7 @@ public class Trials extends AppCompatActivity {
 
         //implement Search View
         sv = (SearchView) findViewById(R.id.searchView2);
+        title = (TextView) findViewById(R.id.txtTitle);
 
         //Run Methods
         onCreate();
@@ -99,10 +101,20 @@ public class Trials extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String text) {
                 adapter.getFilter().filter(text);
+
+                if (text.isEmpty()) {
+                    title.setText("Bike Trails");
+                }
+
+                else {
+                    title.setText("Search: " + text);
+                }
+
                 return false;
             }
         });
     }
+
 
     private void populateListView() {
 
@@ -156,7 +168,6 @@ if (databaseisconnected == true) {
                 System.out.println("connection error " + e.getMessage());
 
             }
-
 }
 
 //Conn Failed
@@ -191,7 +202,7 @@ else if (databaseisconnected == false) {
                 TextView txtview = (TextView)viewClicked.findViewById(R.id.textviewlocation);
                 String product = txtview.getText().toString();
 
-                Intent intent = new Intent(Trials.this, Map_Activity.class);
+                Intent intent = new Intent(Trials.this, MapsActivity.class);
                 startActivity(intent);
 
                 //Invalid Map File, User prompt

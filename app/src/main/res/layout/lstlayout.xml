@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="10dp"
-        android:paddingBottom="30dp">
+        android:paddingBottom="30dp"
+        android:elevation="40dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
                     android:id="@+id/textviewlocation"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/Black"
                     android:paddingTop="10dp"
                     android:paddingLeft="20dp"
                     android:paddingBottom="10dp"
@@ -56,7 +57,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam scelerisque, massa posuere suscipit placerat, velit odio accumsan odio, a varius purus tellus at arcu. Vivamus dolor lectus"
                     android:id="@+id/txtDesc"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/Black"
                     android:layout_below="@+id/textviewlocation"
                     android:layout_alignLeft="@+id/textviewlocation"
                     android:layout_alignStart="@+id/textviewlocation"
@@ -71,11 +72,23 @@
                     android:id="@+id/txtmiles"
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/Black"
                     android:layout_alignBaseline="@+id/textviewlocation"
                     android:layout_alignBottom="@+id/textviewlocation"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/txtFile"
+                    android:layout_alignBottom="@+id/txtDesc"
+                    android:layout_alignRight="@+id/txtDesc"
+                    android:layout_alignEnd="@+id/txtDesc"
+                    android:layout_marginBottom="31dp"
+                    android:visibility="invisible" />
             </RelativeLayout>
         </RelativeLayout>
 

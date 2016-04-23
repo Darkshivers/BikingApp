@@ -8,9 +8,11 @@ import android.os.StrictMode;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -46,22 +48,31 @@ public class Trials extends AppCompatActivity {
     String connString = "jdbc:jtds:sqlserver://SQL2014.studentwebserver.co.uk";
     Statement stmt;
 
+
     //Array List for List adapter
     public ArrayList<RowItems> TrailsName = new ArrayList<RowItems>();
     Context context = this;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trials);
 
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar.setTitle("Bike Trails");
+        toolbar.setSubtitle("Select From The Trails Below");
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setSubtitleTextColor(Color.WHITE);
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         //implement Search View
         sv = (SearchView) findViewById(R.id.searchView2);
-        title = (TextView) findViewById(R.id.txtTitle);
+        title = (TextView) findViewById(R.id.txtFile);
 
         //Run Methods
         onCreate();
@@ -103,11 +114,11 @@ public class Trials extends AppCompatActivity {
                 adapter.getFilter().filter(text);
 
                 if (text.isEmpty()) {
-                    title.setText("Bike Trails");
+                    toolbar.setTitle("Bike Trails");
                 }
 
                 else {
-                    title.setText("Search: " + text);
+                    toolbar.setTitle("Search: " + text);
                 }
 
                 return false;
@@ -132,6 +143,7 @@ if (databaseisconnected == true) {
             int length = 0;
             String lengthstring = "";
             String description = "";
+            String filename = "";
             ResultSet rst;
             rst = stmt.executeQuery(sqlTrailsDB);
 
@@ -142,6 +154,7 @@ if (databaseisconnected == true) {
                 length = rst.getInt("Trail_Length");
                 BikeType = rst.getString("Bike_ID");
                 description = rst.getString("Trail_Desc");
+                filename = rst.getString("FileLocation");
 
                 //Convert to support array adapter
                 lengthstring = String.valueOf(length);
@@ -150,13 +163,13 @@ if (databaseisconnected == true) {
 
                 //Select Statement; chooses bike type
                 if (biketypestring == "1") {
-                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.BMXBike, description ));
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.BMXBike, description, filename));
                 }
                 else if (biketypestring == "2"){
-                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.RoadBike, description));
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.RoadBike, description, filename));
                 }
                 else if (biketypestring == "3"){
-                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.MountainBike, description));
+                    TrailsName.add(new RowItems(titles, lengthstring, RowItems.BikeTypes.MountainBike, description, filename));
                 }
 
                 populateListViewAdapter();
@@ -199,17 +212,18 @@ else if (databaseisconnected == false) {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
 
-                TextView txtview = (TextView)viewClicked.findViewById(R.id.textviewlocation);
-                String product = txtview.getText().toString();
+                TextView txtFilename = (TextView)viewClicked.findViewById(R.id.txtFile);
+                String file = txtFilename.getText().toString();
 
                 Intent intent = new Intent(Trials.this, MapsActivity.class);
+                intent.putExtra("fileurl",file);
                 startActivity(intent);
 
                 //Invalid Map File, User prompt
-                if (product == null) {
+                if (file == null) {
 
                     Snackbar snackbar;
-                    snackbar = Snackbar.make(viewClicked, "No Map Data: " + product, Snackbar.LENGTH_SHORT);
+                    snackbar = Snackbar.make(viewClicked, "No Map Data: " + file, Snackbar.LENGTH_SHORT);
                     View snackBarView = snackbar.getView();
 
                     //Custom Colour properties

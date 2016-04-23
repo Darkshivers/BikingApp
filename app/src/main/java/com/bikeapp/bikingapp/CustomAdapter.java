@@ -32,11 +32,13 @@ public class CustomAdapter extends ArrayAdapter<RowItems> {
         TextView length = (TextView) convertView.findViewById(R.id.txtmiles);
         ImageView biketype = (ImageView) convertView.findViewById(R.id.imgBikeType);
         TextView desc = (TextView) convertView.findViewById(R.id.txtDesc);
+        TextView filename = (TextView) convertView.findViewById(R.id.txtFile);
 
         title.setText(Rows.getTitle());
         desc.setText(Rows.getDescription());
         length.setText(Rows.getLength() + " Miles");
         biketype.setImageResource(Rows.getDrawable());
+        filename.setText(Rows.getFilename());
         return convertView;
 
 

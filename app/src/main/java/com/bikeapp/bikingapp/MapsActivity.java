@@ -43,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int ACCESS_COARSE_LOCATION = 0;
 
     private GoogleMap mMap;
+
     private KmlLayer kmlLayer;
 
     @Override
@@ -61,8 +62,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void retrieveFileFromUrl() {
 
-        String url="https://maptoolkit.net/export/outdoorish_bikemap_routes/1692194.kml?65598636";
-        new DownloadKmlFile(url).execute();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String urlname = extras.getString("fileurl");
+            String url=urlname;
+            new DownloadKmlFile(url).execute();
+        }
+
+        else {
+
+
+            new AlertDialog.Builder(this)
+
+                    .setTitle("Cannot Connect")
+                    .setMessage("Cannot connect to server please try again later")
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
     }
 
     private void moveCameraToKml(KmlLayer kmlLayer) {
@@ -143,11 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS_COARSE_LOCATION);
         }
-
-
-
-
-        // Add a marker in Sydney and move the camera
+        // Set Map Type
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
     }
 

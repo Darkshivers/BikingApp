@@ -5,18 +5,19 @@ package com.bikeapp.bikingapp;
 
 public class RowItems {
 
-    private String title, length, Description;
+    private String title, length, Description, filename;
     private BikeTypes biketype;
 
 
     public enum BikeTypes{MountainBike, RoadBike, BMXBike}
 
-    public RowItems(String title, String length, BikeTypes biketype, String Description){
+    public RowItems(String title, String length, BikeTypes biketype, String Description, String filename){
 
         this.title = title;
         this.length = length;
         this.biketype = biketype;
         this.Description = Description;
+        this.filename = filename;
 
     }
 
@@ -29,6 +30,8 @@ public class RowItems {
         return length;
     }
 
+    public String getFilename() {return filename;}
+
     public String getDescription(){return Description;}
 
     public BikeTypes getBiketype() {return biketype;}
@@ -37,7 +40,7 @@ public class RowItems {
 
 
     @Override
-    public String toString() {return "Title: " + title + "Length: "  + length + biketype.name() + "Description: " + Description;}
+    public String toString() {return "Title: " + title + "Length: "  + length + biketype.name() + "Description: " + Description + "filename" + filename;}
 
     public int getDrawable() {return BikeTypeDrawables(biketype);}
 
@@ -50,7 +53,7 @@ public class RowItems {
             case RoadBike:
                 return R.drawable.road;
             case BMXBike:
-                return R.drawable.transport;
+                return R.drawable.people;
         }
 
         return R.drawable.transport;

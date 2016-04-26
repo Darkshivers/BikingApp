@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Double lat = 53.427815;
     Double lng = -2.712940;
 
+    CheckBox lessthan5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         Button Trail;
 
         Trail = (Button) findViewById(R.id.txtTest);
+
+
 
 
         Trail.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
         );
-
 
     }
 

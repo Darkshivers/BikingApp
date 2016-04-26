@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.SearchView;
@@ -49,10 +50,18 @@ public class Trials extends AppCompatActivity {
     Statement stmt;
 
 
+
     //Array List for List adapter
     public ArrayList<RowItems> TrailsName = new ArrayList<RowItems>();
     Context context = this;
     Toolbar toolbar;
+
+
+    boolean lessthan;
+    boolean clear;
+    boolean checked = false;
+
+    CheckBox lessthan5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -115,9 +124,39 @@ public class Trials extends AppCompatActivity {
 
     private void populateListViewAdapter() {
 
+
+
         final ArrayAdapter adapter = new CustomAdapter(this, TrailsName);
+
         ListView list = (ListView) findViewById(R.id.lstTrails);
         list.setAdapter(adapter);
+
+
+
+        lessthan5 = (CheckBox) findViewById(R.id.chkLessthan5);
+
+        lessthan5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (adapter.getCount() > 0) {
+                    adapter.clear();
+                }
+
+                if (lessthan5.isChecked()){
+                    lessthan = true;
+                    onCreate();
+                }
+
+                else {
+                    lessthan = false;
+                    onCreate();
+                }
+
+
+            }
+        });
+
 
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -148,10 +187,20 @@ public class Trials extends AppCompatActivity {
 if (databaseisconnected == true) {
 
         try {
+            String sqlTrailsDB = "";
 
-            //Query DB for Titles
-            String sqlTrailsDB;
-            sqlTrailsDB = "SELECT * FROM db_1219284_Diss.dbo.Trails";
+
+            if (lessthan == false) {
+                //Query DB for Titles
+                sqlTrailsDB = "SELECT * FROM db_1219284_Diss.dbo.Trails";
+
+            }
+
+            if (lessthan == true) {
+                sqlTrailsDB = "SELECT * FROM db_1219284_Diss.dbo.Trails WHERE Trail_Length < 5";
+            }
+
+
             String titles = "";
             String BikeType = "";
             String biketypestring = "";

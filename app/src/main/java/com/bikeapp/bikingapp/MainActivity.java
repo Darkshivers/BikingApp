@@ -32,24 +32,47 @@ public class MainActivity extends AppCompatActivity {
 
     Double lat = 53.427815;
     Double lng = -2.712940;
-    TextView postcode;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button Trails;
+        Button Trail;
 
-        Trails = (Button) findViewById(R.id.txtTest);
+        Trail = (Button) findViewById(R.id.txtTest);
 
 
-        Trails.setOnClickListener(new View.OnClickListener() {
+        Trail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getloc();
             }
         });
+
+        Button Next = (Button) findViewById(R.id.btnNext);
+        Button Help = (Button) findViewById(R.id.btnHelp);
+
+        Help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Tutorial.class);
+                startActivity(intent);
+            }
+        });
+
+        assert Next != null;
+        Next.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        Intent intent = new Intent(MainActivity.this, Trials.class);
+                                        startActivity(intent);
+
+                                    }
+                                }
+        );
+
 
     }
 

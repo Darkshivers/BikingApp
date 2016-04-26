@@ -20,7 +20,8 @@
     android:showAsAction="always"
     android:iconifiedByDefault="false"
     android:clipToPadding="false"
-
+    android:screenOrientation="portrait"
+    android:configChanges="orientation|keyboardHidden"
     android:backgroundTint="@color/bright_foreground_inverse_material_dark"
     android:backgroundTintMode="screen"
     android:background="@color/colorPrimaryDark">
@@ -61,7 +62,8 @@
         android:id="@+id/txtTest"
         android:layout_alignTop="@+id/button"
         android:layout_alignStart="@+id/searchView"
-        android:elevation="500dp"/>
+        android:elevation="500dp"
+        android:shadowColor="#000000" />
 
     <Button
         android:layout_width="wrap_content"
@@ -89,7 +91,8 @@
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
-        android:typeface="serif" />
+        android:typeface="serif"
+        android:theme="@style/Animation.AppCompat.DropDownUp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -98,5 +101,14 @@
         android:id="@+id/btnNext"
         android:layout_below="@+id/txtTest"
         android:layout_alignStart="@+id/txtTest" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Help"
+        android:id="@+id/btnHelp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/button" />
 
 </RelativeLayout>

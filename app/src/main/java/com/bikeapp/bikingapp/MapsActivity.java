@@ -43,7 +43,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int ACCESS_COARSE_LOCATION = 0;
 
     private GoogleMap mMap;
-
     private KmlLayer kmlLayer;
 
     @Override
@@ -156,11 +155,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 == PackageManager.PERMISSION_GRANTED)  {
             mMap.setMyLocationEnabled(true);
 
+
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED){
-
                 mMap.setMyLocationEnabled(true);
-
             }
 
         } else {
